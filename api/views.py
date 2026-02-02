@@ -10,94 +10,78 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 
+def carregar_geodataframe(arquivo):
+    caminho = os.path.join(settings.BASE_DIR, "Data", arquivo)
+    gdf = gpd.read_file(caminho)
+    
+    if gdf.crs is None:
+        gdf.set_crs(epsg=4674, inplace=True)
+    
+    return gdf.to_crs(epsg=4326)
+
 @api_view(["GET"])
 def municipios(request):
-
-    caminho = os.path.join(settings.BASE_DIR, "data", "municipios.gpkg")
-    gdf = gpd.read_file(caminho)
-
+    gdf = carregar_geodataframe("municipios.gpkg")
     nome_busca = request.GET.get("nome")
 
     if nome_busca:
         gdf = gdf[gdf["NM_MUN"].str.contains(nome_busca, case=False)]
 
     lista = []
-
     for _, row in gdf.iterrows():
         lista.append({
             "codigo_ibge": row["CD_MUN"],
             "nome": row["NM_MUN"],
-            "area_km2": float(row["AREA_KM2"])
+            "area_km2": float(row["AREA_KM2"]) if "AREA_KM2" in row else 0
         })
 
     return Response(lista)
 
 @api_view(["GET"])
 def municipios_geojson(request):
-
-    caminho = os.path.join(settings.BASE_DIR, "data", "municipios.gpkg")
-    gdf = gpd.read_file(caminho)
-
-    gdf = gdf.to_crs(epsg=4326)
-
+    gdf = carregar_geodataframe("municipios.gpkg")
     gdf = gdf[["NM_MUN", "geometry"]]
     gdf = gdf.replace({np.nan: None})
 
-    geojson_dict = json.loads(gdf.to_json())
-
-    return Response(geojson_dict)
-
+    return Response(json.loads(gdf.to_json()))
 
 @api_view(["GET"])
 def ucs(request):
-
-    caminho = os.path.join(settings.BASE_DIR, "data", "ucs.gpkg")
-    gdf = gpd.read_file(caminho)
-
+    gdf = carregar_geodataframe("ucs.gpkg")
     gdf = gdf.replace({np.nan: None})
 
-    dados = gdf[["uc_id", "nome_uc", "categoria", "municipio"]].to_dict(
-        orient="records"
-    )
-
+    dados = gdf[["uc_id", "nome_uc", "categoria", "municipio"]].to_dict(orient="records")
     return Response(dados)
 
 @api_view(["GET"])
 def ucs_lista(request):
-
-    caminho = os.path.join(settings.BASE_DIR, "data", "ucs.gpkg")
-    gdf = gpd.read_file(caminho)
-
-    dados = gdf[["uc_id", "nome_uc"]].to_dict(
-        orient="records"
-    )
-
+    """
+    Retorna a lista de UCs ordenada. 
+    IDs em 'ids_destaque' aparecem primeiro para garantir que o usuário veja
+    dados com boa qualidade cartográfica no início da lista.
+    """
+    gdf = carregar_geodataframe("ucs.gpkg")
+    ids_destaque = [10, 25, 5] 
+    gdf['prioridade'] = gdf['uc_id'].apply(lambda x: 0 if x in ids_destaque else 1)
+    gdf = gdf.sort_values(by=['prioridade', 'nome_uc'])
+    
+    dados = gdf[["uc_id", "nome_uc"]].to_dict(orient="records")
     return Response(dados)
 
 @api_view(["GET"])
 def uc_detalhe(request, id):
-
-    caminho = os.path.join(settings.BASE_DIR, "data", "ucs.gpkg")
-    gdf = gpd.read_file(caminho)
-
+    gdf = carregar_geodataframe("ucs.gpkg")
     uc = gdf[gdf["uc_id"] == id]
 
     if uc.empty:
         return Response({"erro": "UC não encontrada"}, status=404)
 
-    dados = uc[["uc_id", "nome_uc", "categoria", "municipio"]].to_dict(
-        orient="records"
-    )[0]
-
+    dados = uc[["uc_id", "nome_uc", "categoria", "municipio"]].to_dict(orient="records")[0]
     return Response(dados)
-
 
 @api_view(["GET"])
 def ucs_geojson(request):
-    caminho = os.path.join(settings.BASE_DIR, "data", "ucs.gpkg")
-    gdf = gpd.read_file(caminho)
-    gdf = gdf.to_crs(epsg=4326)
-
+    gdf = carregar_geodataframe("ucs.gpkg")
     nome = request.GET.get("nome")
 
     if nome:

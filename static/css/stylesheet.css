@@ -1,6 +1,3 @@
-/* ============================
-   VARIÁVEIS DE CORES
-============================ */
 :root {
     --primary-dark: #0e232c;
     --accent-teal: #1abc9c;
@@ -13,9 +10,6 @@
     --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* ============================
-   RESET E BASE
-============================ */
 * {
     margin: 0;
     padding: 0;
@@ -32,15 +26,30 @@ body {
     overflow: hidden;
 }
 
-/* ============================
-   HEADER MODERNO
-============================ */
+#loader {
+    transition: opacity 0.5s ease;
+}
+
+.spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border-left-color: var(--accent-teal);
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
 header {
     background: var(--primary-dark);
     padding: 1.2rem 2rem;
     color: white;
     box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-    z-index: 100;
+    z-index: 1100; 
 }
 
 header h1 {
@@ -57,24 +66,32 @@ header p {
     font-weight: 300;
 }
 
-/* ============================
-   BARRA DE PESQUISA (FLOATING)
-============================ */
 #search-box {
     background: white;
     padding: 1rem 2rem;
-    z-index: 99;
+    position: relative; 
+    z-index: 1010; 
     box-shadow: var(--shadow);
     border-bottom: 1px solid #edf2f7;
+    overflow: visible !important; 
 }
 
 .control-group {
     display: flex;
     gap: 12px;
     align-items: center;
+    overflow: visible !important;
 }
 
-/* Customização Choices.js */
+.choices__list--dropdown {
+    z-index: 10000 !important;
+}
+
+select {
+    display: none; 
+    visibility: hidden;
+}
+
 .choices {
     margin-bottom: 0 !important;
     width: 350px !important;
@@ -85,14 +102,11 @@ header p {
     border: 1px solid #cbd5e1 !important;
     border-radius: 8px !important;
     transition: all 0.3s ease;
+    min-height: 44px !important;
+    display: flex;
+    align-items: center;
 }
 
-.choices__inner:focus-within {
-    border-color: var(--accent-teal) !important;
-    box-shadow: 0 0 0 3px rgba(26, 188, 156, 0.2);
-}
-
-/* Botões Profissionais */
 button {
     height: 44px;
     padding: 0 24px;
@@ -101,41 +115,20 @@ button {
     cursor: pointer;
     font-weight: 600;
     font-size: 0.9rem;
-    transition: all 0.2s transform;
+    transition: all 0.2s ease;
     display: flex;
     align-items: center;
     gap: 8px;
 }
 
-button:active {
-    transform: scale(0.98);
-}
+button:active { transform: scale(0.98); }
 
-#btnPesquisar {
-    background: var(--accent-teal);
-    color: white;
-}
+#btnPesquisar { background: var(--accent-teal); color: white; }
+#btnPesquisar:hover { background: #16a085; box-shadow: 0 4px 12px rgba(26, 188, 156, 0.3); }
 
-#btnPesquisar:hover {
-    background: #16a085;
-    box-shadow: 0 4px 12px rgba(26, 188, 156, 0.3);
-}
+#btnLimpar { background: transparent; color: var(--text-muted); border: 1px solid #cbd5e1; }
+#btnLimpar:hover { background: #f1f5f9; color: var(--accent-red); border-color: var(--accent-red); }
 
-#btnLimpar {
-    background: transparent;
-    color: var(--text-muted);
-    border: 1px solid #cbd5e1;
-}
-
-#btnLimpar:hover {
-    background: #f1f5f9;
-    color: var(--accent-red);
-    border-color: var(--accent-red);
-}
-
-/* ============================
-   LAYOUT PRINCIPAL
-============================ */
 main {
     display: flex;
     flex: 1;
@@ -144,12 +137,9 @@ main {
 
 #map {
     flex: 3;
-    z-index: 1;
+    z-index: 1; 
 }
 
-/* ============================
-   PAINEL LATERAL (CARDS)
-============================ */
 aside {
     flex: 1;
     max-width: 400px;
@@ -178,24 +168,13 @@ aside h2::after {
     background: #edf2f7;
 }
 
-/* Estilo do Card de Informação */
 .detalhe-uc {
     background: #f8fafc;
     padding: 1.5rem;
     border-radius: 12px;
     border-left: 4px solid var(--accent-teal);
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-}
-
-.detalhe-uc h3 {
-    font-size: 1.1rem;
-    color: var(--primary-dark);
-    margin-bottom: 1rem;
-    line-height: 1.3;
-}
-
-.info-item {
-    margin-bottom: 10px;
+    word-wrap: break-word;
 }
 
 .info-label {
@@ -205,11 +184,27 @@ aside h2::after {
     color: var(--text-muted);
     font-weight: 600;
     letter-spacing: 0.5px;
+    margin-bottom: 2px;
 }
 
 .info-value {
     font-size: 0.95rem;
     color: var(--text-main);
+    font-weight: 400;
+}
+
+.data-disclaimer {
+    margin-top: auto;
+    padding: 1rem;
+    background: #fff3cd; 
+    border-radius: 8px;
+    border: 1px solid #ffeeba;
+}
+
+.data-disclaimer p {
+    font-size: 0.7rem;
+    color: #856404;
+    line-height: 1.4;
 }
 
 .nota-inicial {
@@ -219,9 +214,6 @@ aside h2::after {
     padding: 2rem 0;
 }
 
-/* ============================
-   RESPONSIVO
-============================ */
 @media (max-width: 1024px) {
     main { flex-direction: column; overflow: auto; }
     aside { max-width: 100%; border-left: none; border-top: 1px solid #ddd; }

@@ -6,81 +6,79 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GeoView RJ</title>
 
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap">
 
-    <!-- Leaflet CSS -->
-    <link rel="stylesheet"
-          href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 
-    <!-- Choices.js CSS -->
-    <link rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css"/>
 
-    <!-- CSS do projeto -->
     <link rel="stylesheet" href="{% static 'css/stylesheet.css' %}">
+    
+    <style>
+        /* Estilo rápido para o spinner do loader que aparece antes do CSS carregar */
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border-left-color: #1abc9c;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        #loader { transition: opacity 0.5s ease; }
+    </style>
 </head>
 
 <body>
-
-<!-- HEADER -->
-<header>
-    <h1>GeoView RJ</h1>
-    <p> Sistema de pesquisa e geovisualização das Unidades de Conservação do Estado do Rio de Janeiro</p>
-</header>
-
-<!-- BARRA DE PESQUISA -->
-<section id="search-box">
-    <div class="control-group">
-
-        <!-- Select UC -->
-        <select id="choices-select">
-            <option value="">Selecione uma Unidade de Conservação...</option>
-        </select>
-
-        <!-- Botões -->
-        <button id="btnPesquisar" type="button">
-            Pesquisar
-        </button>
-
-        <button id="btnLimpar" type="button">
-            Limpar
-        </button>
-
+    <div id="loader" style="position: fixed; width: 100%; height: 100%; background: white; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+        <div class="spinner"></div> 
+        <p style="font-family: 'Poppins', sans-serif; margin-top: 10px; color: #2d3436;">Carregando bases cartográficas...</p>
     </div>
-</section>
 
-<!-- CONTEÚDO PRINCIPAL -->
-<main>
+    <header>
+        <h1>GeoView RJ</h1>
+        <p>Sistema de pesquisa e geovisualização das Unidades de Conservação do Estado do Rio de Janeiro</p>
+    </header>
 
-    <!-- MAPA -->
-    <section id="map"></section>
+    <section id="search-box">
+        <div class="control-group">
+            <div class="select-container">
+                <select id="choices-select">
+                    <option value="">Selecione uma Unidade de Conservação...</option>
+                </select>
+            </div>
 
-    <!-- PAINEL LATERAL -->
-    <aside>
-        <h2>Resultados</h2>
-
-        <div id="tabela-info">
-            <p class="nota-inicial">
-                Pesquise uma Unidade de Conservação para destacá-la no mapa.
-            </p>
+            <button id="btnPesquisar" type="button">Pesquisar</button>
+            <button id="btnLimpar" type="button">Limpar</button>
         </div>
-    </aside>
+    </section>
 
-</main>
+    <main>
+        <section id="map"></section>
 
-<!-- SCRIPTS -->
+        <aside>
+            <h2>Resultados</h2>
+            
+            <div id="tabela-info">
+                <p class="nota-inicial">
+                    Pesquise uma Unidade de Conservação para destacá-la no mapa.
+                </p>
+            </div>
 
-<!-- Leaflet JS -->
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+            <div class="data-disclaimer">
+                <p>⚠️ <strong>Nota:</strong> As delimitações geográficas seguem as bases oficiais (SNUC/IBGE). Eventuais deslocamentos são inerentes à escala e digitalização original dos dados.</p>
+            </div>
+        </aside>
+    </main>
 
-<!-- Choices JS -->
-<script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
-
-<!-- JS do projeto -->
-<script src="{% static 'js/script.js' %}"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+    
+    <script src="{% static 'js/script.js' %}"></script>
 
 </body>
 </html>
