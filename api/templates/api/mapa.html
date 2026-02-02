@@ -1,38 +1,86 @@
+{% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-    <title>Mapa das Unidades de Conservação</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeoView RJ</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap">
 
     <!-- Leaflet CSS -->
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet/dist/leaflet.css"
-    />
+    <link rel="stylesheet"
+          href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 
-    <style>
-        #map {
-            height: 600px;
-            width: 100%;
-        }
-    </style>
+    <!-- Choices.js CSS -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css"/>
+
+    <!-- CSS do projeto -->
+    <link rel="stylesheet" href="{% static 'css/stylesheet.css' %}">
 </head>
 
 <body>
-    <h2>Unidades de Conservação - RJ</h2>
 
-    <div id="map"></div>
+<!-- HEADER -->
+<header>
+    <h1>GeoView RJ</h1>
+    <p> Sistema de pesquisa e geovisualização das Unidades de Conservação do Estado do Rio de Janeiro</p>
+</header>
 
-    <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<!-- BARRA DE PESQUISA -->
+<section id="search-box">
+    <div class="control-group">
 
-    <script>
-        // Criar mapa
-        var map = L.map("map").setView([-22.9, -43.2], 7);
+        <!-- Select UC -->
+        <select id="choices-select">
+            <option value="">Selecione uma Unidade de Conservação...</option>
+        </select>
 
-        // Adicionar camada base
-        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-            attribution: "© OpenStreetMap"
-        }).addTo(map);
-    </script>
+        <!-- Botões -->
+        <button id="btnPesquisar" type="button">
+            Pesquisar
+        </button>
+
+        <button id="btnLimpar" type="button">
+            Limpar
+        </button>
+
+    </div>
+</section>
+
+<!-- CONTEÚDO PRINCIPAL -->
+<main>
+
+    <!-- MAPA -->
+    <section id="map"></section>
+
+    <!-- PAINEL LATERAL -->
+    <aside>
+        <h2>Resultados</h2>
+
+        <div id="tabela-info">
+            <p class="nota-inicial">
+                Pesquise uma Unidade de Conservação para destacá-la no mapa.
+            </p>
+        </div>
+    </aside>
+
+</main>
+
+<!-- SCRIPTS -->
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<!-- Choices JS -->
+<script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+
+<!-- JS do projeto -->
+<script src="{% static 'js/script.js' %}"></script>
+
 </body>
 </html>

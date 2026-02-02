@@ -4,15 +4,12 @@ import numpy as np
 import geopandas as gpd
 
 from django.conf import settings
-from rest_framework.response import Response
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
 from django.shortcuts import render
 
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
-# ==============================
-# MUNICÍPIOS
-# ==============================
+
 @api_view(["GET"])
 def municipios(request):
 
@@ -35,10 +32,22 @@ def municipios(request):
 
     return Response(lista)
 
+@api_view(["GET"])
+def municipios_geojson(request):
 
-# ==============================
-# UCS (LISTA COMPLETA SEM GEOMETRIA)
-# ==============================
+    caminho = os.path.join(settings.BASE_DIR, "data", "municipios.gpkg")
+    gdf = gpd.read_file(caminho)
+
+    gdf = gdf.to_crs(epsg=4326)
+
+    gdf = gdf[["NM_MUN", "geometry"]]
+    gdf = gdf.replace({np.nan: None})
+
+    geojson_dict = json.loads(gdf.to_json())
+
+    return Response(geojson_dict)
+
+
 @api_view(["GET"])
 def ucs(request):
 
@@ -47,32 +56,24 @@ def ucs(request):
 
     gdf = gdf.replace({np.nan: None})
 
-    dados = gdf[["uc_id", "nome_uc", "categoria", "uf", "municipio"]].to_dict(
-        orient="records"
-    )
-
-    return Response(dados)
-
-
-# ==============================
-# UCS LISTA SIMPLES (LEVE)
-# ==============================
-@api_view(["GET"])
-def ucs_lista(request):
-
-    caminho = os.path.join(settings.BASE_DIR, "data", "ucs.gpkg")
-    gdf = gpd.read_file(caminho)
-
     dados = gdf[["uc_id", "nome_uc", "categoria", "municipio"]].to_dict(
         orient="records"
     )
 
     return Response(dados)
 
+@api_view(["GET"])
+def ucs_lista(request):
 
-# ==============================
-# UC DETALHE POR ID
-# ==============================
+    caminho = os.path.join(settings.BASE_DIR, "data", "ucs.gpkg")
+    gdf = gpd.read_file(caminho)
+
+    dados = gdf[["uc_id", "nome_uc"]].to_dict(
+        orient="records"
+    )
+
+    return Response(dados)
+
 @api_view(["GET"])
 def uc_detalhe(request, id):
 
@@ -91,21 +92,24 @@ def uc_detalhe(request, id):
     return Response(dados)
 
 
-# ==============================
-# UCS GEOJSON (MAPA)
-# ==============================
 @api_view(["GET"])
 def ucs_geojson(request):
-
     caminho = os.path.join(settings.BASE_DIR, "data", "ucs.gpkg")
     gdf = gpd.read_file(caminho)
+    gdf = gdf.to_crs(epsg=4326)
+
+    nome = request.GET.get("nome")
+
+    if nome:
+        gdf = gdf[gdf["nome_uc"].str.strip() == nome.strip()]
+
+    if gdf.empty:
+        return Response({"type": "FeatureCollection", "features": []})
 
     gdf = gdf[["nome_uc", "categoria", "municipio", "geometry"]]
     gdf = gdf.replace({np.nan: None})
-
-    geojson_dict = json.loads(gdf.to_json())
-
-    return Response(geojson_dict)
+    
+    return Response(json.loads(gdf.to_json()))
 
 @api_view(["GET"])
 def home(request):
@@ -113,6 +117,7 @@ def home(request):
         "mensagem": "API GeoTurismo RJ funcionando 🚀",
         "rotas": [
             "/municipios/",
+            "/municipios/geojson/",
             "/ucs/",
             "/ucs/lista/",
             "/ucs/geojson/",

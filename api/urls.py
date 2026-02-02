@@ -1,21 +1,30 @@
 from django.urls import path
 from .views import (
-    municipios, ucs, ucs_geojson,
-    ucs_lista, uc_detalhe,
-    home, mapa
+    municipios,
+    municipios_geojson,
+    ucs,
+    ucs_lista,
+    uc_detalhe,
+    ucs_geojson,
+    home,
+    mapa
 )
 
 urlpatterns = [
-    # Página principal com mapa
+
+    # Página principal (mapa)
     path("", mapa),
 
-    # Home da API
+    # Home API
     path("api/", home),
 
-    # Rotas API
+    # Municípios
     path("municipios/", municipios),
+    path("municipios/geojson/", municipios_geojson),
+
+    # UCs
     path("ucs/", ucs),
-    path("ucs/geojson/", ucs_geojson),
     path("ucs/lista/", ucs_lista),
     path("ucs/<int:id>/", uc_detalhe),
+    path("ucs/geojson/", ucs_geojson),
 ]

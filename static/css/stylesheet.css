@@ -1,247 +1,230 @@
+/* ============================
+   VARIÁVEIS DE CORES
+============================ */
+:root {
+    --primary-dark: #0e232c;
+    --accent-teal: #1abc9c;
+    --accent-orange: #e67e22;
+    --accent-red: #d63031;
+    --bg-light: #f8fafc;
+    --sidebar-bg: #ffffff;
+    --text-main: #2d3436;
+    --text-muted: #636e72;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* ============================
+   RESET E BASE
+============================ */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-/* Base da página */
 body {
-  font-family: "Segoe UI", Arial, sans-serif;
-  background-color: #f4f6f9;
-  color: #333;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+    font-family: 'Poppins', sans-serif;
+    background: var(--bg-light);
+    color: var(--text-main);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 }
 
-/* Navbar */
-.navbar {
-  background-color: #ffffff;
-  padding: 16px 32px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #e1e1e1;
+/* ============================
+   HEADER MODERNO
+============================ */
+header {
+    background: var(--primary-dark);
+    padding: 1.2rem 2rem;
+    color: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    z-index: 100;
 }
 
-.logo {
-  font-weight: 600;
-  color: #2c3e50;
+header h1 {
+    font-size: 1.6rem;
+    letter-spacing: -0.5px;
+    background: linear-gradient(to right, #ffffff, #1abc9c);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
-.nav-links {
-  list-style: none;
-  display: flex;
-  gap: 20px;
+header p {
+    font-size: 0.85rem;
+    opacity: 0.7;
+    font-weight: 300;
 }
 
-.nav-links a {
-  text-decoration: none;
-  color: #2c3e50;
-  font-weight: 500;
+/* ============================
+   BARRA DE PESQUISA (FLOATING)
+============================ */
+#search-box {
+    background: white;
+    padding: 1rem 2rem;
+    z-index: 99;
+    box-shadow: var(--shadow);
+    border-bottom: 1px solid #edf2f7;
 }
 
-.nav-links a:hover {
-  color: #007bff;
+.control-group {
+    display: flex;
+    gap: 12px;
+    align-items: center;
 }
 
-/* Área principal */
-main {
-  width: 100%;
-  max-width: 1300px;
-  margin: 0 auto;
-  padding: 32px;
+/* Customização Choices.js */
+.choices {
+    margin-bottom: 0 !important;
+    width: 350px !important;
 }
 
-/* Títulos e textos */
-h1 {
-  font-size: 1.6rem;
-  margin-bottom: 20px;
-  color: #2c3e50;
+.choices__inner {
+    background-color: #f1f5f9 !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 8px !important;
+    transition: all 0.3s ease;
 }
 
-p {
-  margin-bottom: 12px;
+.choices__inner:focus-within {
+    border-color: var(--accent-teal) !important;
+    box-shadow: 0 0 0 3px rgba(26, 188, 156, 0.2);
 }
 
-/* Card */
-.card {
-  background-color: #ffffff;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.06);
-}
-
-/* Tabela */
-.table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.table thead {
-  background-color: #f1f3f6;
-}
-
-.table th {
-  padding: 12px;
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  color: #555;
-  text-align: left;
-}
-
-.table td {
-  padding: 12px;
-  border-top: 1px solid #e5e5e5;
-  font-size: 0.9rem;
-}
-
-.table tbody tr:hover {
-  background-color: #f9fbff;
-}
-
-/* Status */
-.status {
-  font-weight: 600;
-}
-
-.status.ativo {
-  color: #2e7d32;
-}
-
-.status.inativo {
-  color: #c62828;
-}
-
-.status.pendente {
-  color: #ef6c00;
-}
-
-/* Dashboard */
-.options-list {
-  list-style: none;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 16px;
-  margin-top: 24px;
-}
-
-.options-list a {
-  background-color: #ffffff;
-  padding: 16px;
-  border-radius: 8px;
-  text-align: center;
-  text-decoration: none;
-  color: #2c3e50;
-  font-weight: 500;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-  transition: 0.2s;
-}
-
-.options-list a:hover {
-  background-color: #007bff;
-  color: #ffffff;
-}
-
-/* Formulários padrão */
-form {
-  background-color: #ffffff;
-  padding: 24px;
-  border-radius: 8px;
-  max-width: 400px;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.05);
-}
-
-label {
-  display: block;
-  margin-top: 12px;
-  font-weight: 500;
-}
-
-input {
-  width: 100%;
-  padding: 10px;
-  margin-top: 6px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-}
-
-input:focus {
-  outline: none;
-  border-color: #007bff;
-}
-
+/* Botões Profissionais */
 button {
-  margin-top: 16px;
-  padding: 10px;
-  width: 100%;
-  border: none;
-  border-radius: 6px;
-  background-color: #007bff;
-  color: #fff;
-  font-weight: 600;
-  cursor: pointer;
+    height: 44px;
+    padding: 0 24px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s transform;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
-button:hover {
-  background-color: #0056b3;
+button:active {
+    transform: scale(0.98);
 }
 
-/* Login */
-.login-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: calc(100vh - 140px);
+#btnPesquisar {
+    background: var(--accent-teal);
+    color: white;
 }
 
-.login-card {
-  width: 100%;
-  max-width: 420px;
-  background-color: #ffffff;
-  padding: 32px;
-  border-radius: 10px;
-  box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+#btnPesquisar:hover {
+    background: #16a085;
+    box-shadow: 0 4px 12px rgba(26, 188, 156, 0.3);
 }
 
-.login-card h1 {
-  text-align: center;
-  margin-bottom: 8px;
+#btnLimpar {
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px solid #cbd5e1;
 }
 
-.login-subtitle {
-  text-align: center;
-  font-size: 0.9rem;
-  color: #666;
-  margin-bottom: 24px;
+#btnLimpar:hover {
+    background: #f1f5f9;
+    color: var(--accent-red);
+    border-color: var(--accent-red);
 }
 
-.form-group {
-  margin-bottom: 16px;
+/* ============================
+   LAYOUT PRINCIPAL
+============================ */
+main {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
 }
 
-.login-footer {
-  margin-top: 16px;
-  text-align: center;
+#map {
+    flex: 3;
+    z-index: 1;
 }
 
-.login-footer a {
-  font-size: 0.85rem;
-  color: #007bff;
-  text-decoration: none;
+/* ============================
+   PAINEL LATERAL (CARDS)
+============================ */
+aside {
+    flex: 1;
+    max-width: 400px;
+    background: var(--sidebar-bg);
+    padding: 1.5rem;
+    border-left: 1px solid #edf2f7;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
 }
 
-.login-footer a:hover {
-  text-decoration: underline;
+aside h2 {
+    font-size: 1.2rem;
+    color: var(--primary-dark);
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-/* Rodapé */
-footer {
-  margin-top: auto;
-  background-color: #ffffff;
-  border-top: 1px solid #e1e1e1;
-  padding: 16px;
-  text-align: center;
-  font-size: 0.85rem;
-  color: #777;
+aside h2::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #edf2f7;
+}
+
+/* Estilo do Card de Informação */
+.detalhe-uc {
+    background: #f8fafc;
+    padding: 1.5rem;
+    border-radius: 12px;
+    border-left: 4px solid var(--accent-teal);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.detalhe-uc h3 {
+    font-size: 1.1rem;
+    color: var(--primary-dark);
+    margin-bottom: 1rem;
+    line-height: 1.3;
+}
+
+.info-item {
+    margin-bottom: 10px;
+}
+
+.info-label {
+    display: block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.info-value {
+    font-size: 0.95rem;
+    color: var(--text-main);
+}
+
+.nota-inicial {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    text-align: center;
+    padding: 2rem 0;
+}
+
+/* ============================
+   RESPONSIVO
+============================ */
+@media (max-width: 1024px) {
+    main { flex-direction: column; overflow: auto; }
+    aside { max-width: 100%; border-left: none; border-top: 1px solid #ddd; }
+    #map { height: 50vh; flex: none; }
+    .choices { width: 100% !important; }
 }
