@@ -1,5 +1,5 @@
 """
-WSGI config for geoturismo_rj project.
+WSGI config for NatureMap-API project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'geoturismo_rj.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'NatureMap-API.settings')
 
 application = get_wsgi_application()
