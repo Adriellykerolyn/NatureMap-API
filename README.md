@@ -1,38 +1,20 @@
-# GeoBase Municipal API
+# NatureMap-API🌳
 
-API REST desenvolvida com **Django** e **PostgreSQL/PostGIS** para disponibilizar dados geográficos municipais.
+Sistema de geovisualização das Unidades de Conservação do Rio de Janeiro.
 
-Este projeto permite consultas de informações como:
+## 🚀 Tecnologias
+- **Backend:** Python + Django + Django REST Framework
+- **Geoprocessamento:** GeoPandas + NumPy
+- **Frontend:** Leaflet.js + Choices.js
+- **Dados:** GeoPackage (OGC Standard)
 
-- Bairros
-- Localidades
-- Logradouros
-- Áreas de conservação
+## 🛠️ Funcionalidades
+- Visualização de limites municipais.
+- Pesquisa dinâmica de Unidades de Conservação.
+- Filtro espacial e detalhamento técnico das áreas protegidas.
 
-## 🚀 Tecnologias Utilizadas
-
-- Python
-- Django
-- Django REST Framework
-- PostgreSQL + PostGIS
-- Suporte a GeoJSON
-
-## 📌 Funcionalidades (MVP)
-
-- Endpoints de consulta geográfica
-- Busca por nome ou categoria
-- Retorno em JSON/GeoJSON
-- Integração com banco PostGIS
-
-## 📂 Status do Projeto
-
-Repositório em desenvolvimento ativo como parte do meu portfólio Backend.
-
-## 🔜 Próximos Passos
-
-- Implementar autenticação
-- Melhorar filtros e buscas
-- Deploy em ambiente online
-
----
+## 📖 Como executar
+1. Clone o repositório
+2. Instale as dependências: `pip install -r requirements.txt`
+3. Execute: `python manage.py runserver`
 Desenvolvido por Adrielly Souza
