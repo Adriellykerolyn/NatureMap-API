@@ -114,7 +114,7 @@ def ucs_geojson(request):
 @api_view(["GET"])
 def home(request):
     return Response({
-        "mensagem": "API GeoTurismo RJ funcionando 🚀",
+        "mensagem": "API NatureMap_API RJ funcionando 🚀",
         "rotas": [
             "/municipios/",
             "/municipios/geojson/",
