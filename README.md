@@ -3,7 +3,9 @@
 Sistema de geovisualização interativa das **Unidades de Conservação do Estado do Rio de Janeiro**, com integração entre backend geoespacial e frontend web.
 
 O projeto permite explorar limites municipais e realizar pesquisas dinâmicas por áreas protegidas através de um mapa interativo.
-
+---
+<img width="1904" height="950" alt="image" src="https://github.com/user-attachments/assets/b04ec63d-ef71-47e5-854a-851b2e02c1a1" />
+---
 ---
 
 ## 🚀 Tecnologias Utilizadas
